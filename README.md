@@ -26,25 +26,7 @@ Retriever Agent: Fetches verified medical summaries from trusted sources.
 
 🏗️ Architecture
 
-The system follows a Split-Stack Monorepo architecture, deploying the frontend and backend as separate services that communicate via REST API.
-
-graph TD
-    User[User Interface] -->|HTTP POST /api/triage| API[FastAPI Backend]
-    
-    subgraph "Backend (Orchestrator)"
-        API --> Extractor[Symptom Extractor Agent]
-        Extractor -->|Structured Data| Triage[Triage Agent]
-        Extractor -->|Keywords| Retriever[Info Retriever Agent]
-        
-        Triage -->|Rule Check| Logic{Critical?}
-        Logic -- Yes --> Result[Emergency Alert]
-        Logic -- No --> LLM[Gemini LLM Analysis]
-        
-        Retriever -->|Fetch| Knowledge[Trusted Medical DB]
-    end
-    
-    Result & LLM & Knowledge --> Response[JSON Response]
-    Response --> User
+The system follows a Split-Stack Monorepo architecture, deploying the frontend and backend as separate services that communicate via REST API
 
 
 🛠️ Tech Stack
@@ -148,24 +130,6 @@ npm run dev
 
 
 The frontend will start at http://localhost:5173
-
-📂 Project Structure
-
-/
-├── backend/                 # Python FastAPI Application
-│   ├── agents.py           # Logic for Extractor, Triage, and Retriever Agents
-│   ├── main.py             # API Endpoints & Orchestrator
-│   ├── models.py           # Pydantic Data Schemas
-│   └── requirements.txt    # Python Dependencies
-│
-├── frontend/                # React Vite Application
-│   ├── src/
-│   │   ├── App.jsx         # Main Chat Interface
-│   │   └── main.jsx        # Entry Point
-│   ├── package.json        # JS Dependencies
-│   └── vite.config.js      # Vite Configuration
-│
-└── README.md               # Project Documentation
 
 
 ⚠️ Medical Disclaimer
