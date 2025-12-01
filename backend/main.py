@@ -18,6 +18,10 @@ symptom_agent = SymptomExtractorAgent()
 triage_agent = TriageAgent()
 info_agent = InfoRetrieverAgent()
 
+@app.get("/")
+async def root():
+    return {"message": "Healthage AI Triage API is running"}
+
 @app.post("/api/triage", response_model=TriageResponse)
 async def triage_endpoint(user_message: UserMessage):
     try:
